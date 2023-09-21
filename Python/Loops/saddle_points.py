@@ -1,23 +1,14 @@
-import numpy as np
-
-
 def saddle_points(matrix):
     points = []
-    for row in matrix:
+    t_matrix = list(zip(*matrix))
+    length_row = 0
+    for r, row in enumerate(matrix):
+        if length_row and len(row) != length_row:
+            raise ValueError("irregular matrix")
+        length_row = len(row)
         maxium = max(row)
         idx_of_maxiums = [i for i, val in enumerate(row) if val == maxium]
-
+        for c in idx_of_maxiums:
+            if row[c] == min(t_matrix[c]):
+                points.append({'row': r + 1, 'column': c + 1})
     return points
-
-
-matrix = [[4, 5, 4], [3, 5, 5], [1, 5, 4]]
-print(saddle_points(matrix))
-
-# [4, 5, 4]
-# [3, 5, 5]
-# [1, 5, 4]
-
-# [{"row": 1, "column": 2}, {"row": 2, "column": 2}, {"row": 3, "column": 2},]
-
-matrix = []
-print(saddle_points(matrix))
